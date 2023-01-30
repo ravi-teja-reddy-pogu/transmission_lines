@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>PARAMETERS CALCULATIONS</title>
+	<script src="complex.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link href="https://cdn.jsdelivr.net/npm/jsxgraph@1.1.0/distrib/jsxgraph.css" rel="stylesheet" type="text/css" />
+	<script src="https://cdn.jsdelivr.net/npm/jsxgraph@1.1.0/distrib/jsxgraphcore.js" type="text/javascript" charset="UTF-8"></script>
+	<!-- The next line is optional: MathJax -->
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+	<script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+</head>
+<body>
+
+<div class="wrapper">
+	<header><center><h1 style="font-size: 40px">TRANSMISSION AND DISTRIBUTION OF ELECTRICAL ENERGY</center></h1> <br>
+	<center><h1>PARAMETERS OF THE TRANSMISSION SYSTEM</h1></center></header>
+	<center>
+    <div id="input-box"><center><h2>INPUT VALUES</h2>
+    	<marquee style="color: red">*Zoom Out To View Graphs*</marquee>
+    <div>TYPE OF SYSTEM:<br>
+        <select type="multiple" id="type">
+            <option value="sym" selected="selected">SYMMENTRICAL</option>
+            <option value="unsym">UNSYMMENTRICAL</option>
+        </select>
+    </div>
+    <div id="writer">SPACING BETWEEN THE PHASE CONDUCTORS IN METERS:<br>BETWEEN PHASES :<br><input  type="number" step="any" min="0" oninput="validity.valid||(value='');" id="p1"/><br> 
+
+    <!-- BETWEEN PHASE A AND B	<input  type="number" step="any" min="0" oninput="validity.valid||(value='');" id="p1"/><br>
+    BETWEEN PHASE B AND C 	<input type="number" step="any" min="0" oninput="validity.valid||(value='');" id="p2"/><br>
+    BETWEEN PHASE A AND C	<input type="number" step="any" min="0" oninput="validity.valid||(value='');" id="p3"/> -->
+        <!-- <select type="multiple" id="unit">
+            <option value="m" selected="selected">m</option>
+            <option value="cm">cm</option>
+            <option value="mm">mm</option>
+        </select> -->
+
+    </div>
+    <script>
+         let sym = document.querySelector("#type");
+         let writerd = document.querySelector("#writer");
+         console.log(sym.value);
+         sym.addEventListener('input',function(e){
+           e.preventDefault(e)
+          if(sym.value=='sym'){
+            writerd.innerHTML = `SPACING BETWEEN THE PHASE CONDUCTORS IN METERS:<br>BETWEEN PHASES :<br><input  type="number" step="any" min="0" oninput="validity.valid||(value='');" id="p1"/><br>`;
+          }else{
+            writerd.innerHTML = `SPACING BETWEEN THE PHASE CONDUCTORS IN METERS:<br>BETWEEN PHASE A AND B:<br>	<input  type="number" step="any" min="0" oninput="validity.valid||(value='');" id="p1"/><br>BETWEEN PHASE B AND C:<br>	<input type="number" step="any" min="0" oninput="validity.valid||(value='');" id="p2"/><br>BETWEEN PHASE A AND C:<br>	<input type="number" step="any" min="0" oninput="validity.valid||(value='');" id="p3"/>`;
+            console.log(sym.value);
+          }
+         })
+         // document.querySelector("#sel").addEventListener('click',function(e){ console.log(document.querySelector("#p1").value);})
+    </script>
+    <div>NUMBER OF SUB-CONDUCTORS PER BUNDLE:<br><input type="number" min="1" oninput="validity.valid||(value='');" id="no-a" name="strands">
+        <!-- <select type="multiple" oninput="validA(this.value)" id="no">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="0">custom</option>
+        </select>
+ -->    </div>
+ <script type="text/javascript">
+ 	document.getElementById('no-a').addEventListener('input',function(f){
+           f.preventDefault(f)
+          if(document.getElementById('no-a').value==1){
+          	document.getElementById('spacing-sub').style.display="none";
+          }else{
+          	document.getElementById('spacing-sub').style.display="block";
+          }
+    })
+ </script>
+    <div id="spacing-sub">SPACING BETWEEN THE SUB-CONDUCTORS IN M:<br> 
+    	<input type="number" step="any" min="0" oninput="validity.valid||(value='');" id="daa"/><br>
+    	<!-- <input type="number" step="any" min="0" oninput="validity.valid||(value='');" id="da-a-"/><br> -->
+        <!-- <select type="multiple" id="sub-unit">
+            <option value="m" selected="selected">m</option>
+            <option value="cm">cm</option>
+            <option value="mm">mm</option>
+        </select> -->
+    </div>
+       <div>NUMBER OF STRANDS IN EACH SUB CONDUCTOR:<br><input type="number" min="1" oninput="validity.valid||(value='');" id="no-sub" name="strands">
+        <!-- <select type="multiple" oninput="valid(this.value)" id="sub-no">
+            <option value="1" selected="selected">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="">custom</option>
+        </select>
+ -->
+    </div>
+    <div>DIAMETER OF EACH STRAND IN M:<br> <input type="number" step="any" min="0" oninput="validity.valid||(value='');" id="diameter"/>
+        <!-- <select type="multiple" id="dia-unit">
+            <option value="cm" selected="selected">cm</option>
+            <option value="mm">mm</option>
+        </select> -->
+    </div>
+    <div>
+    	LENGTH OF THE LINE IN KM:<br> <input type="number" step="any" min="0" oninput="validity.valid||(value='');" id="length"/>
+    </div>
+    <div>MODEL OF THE LINE:<br>
+        <select type="multiple" id="model-type">
+            <option value="1" selected="selected">SHORT</option>
+            <option value="2">MEDIUM(NOMINAL PI)</option>
+            <option value="3">LONG</option>
+        </select>
+    </div>
+    <div>
+    	RESISTANCE OF THE LINE PER KM:<br> <input type="number" step="any" min="0" oninput="validity.valid||(value='');" id="resistance"/>
+    </div>
+    <div>
+    	POWER FREQUENCY:<br> <input type="number" step="any" min="0" oninput="validity.valid||(value='');" id="p-frequency"/>
+    </div>
+    <div>NOMINAL SYSTEM VOLTAGE in KV:<br> <input type="number" step="any" min="0" oninput="validity.valid||(value='');" id="n-voltage"/>
+        <!-- <select type="multiple" id="v-unit">
+            <option value="m" selected="selected">V</option>
+            <option value="cm">kV</option>
+        </select> -->
+    </div>
+    <div>
+    	RECEIVING END LOAD IN MW:<br> <input type="number" step="any" min="0" oninput="validity.valid||(value='');" id="r-load"/>
+    </div>
+    <div>
+    	POWER FACTOR OF RECEIVING END:<br> <input type="number" step="any" min="0" max="1" oninput="validity.valid||(value='');" id="r-pf"/>
+    	<select type="multiple" id="loadtype">
+            <option value="-1">leading</option>
+            <option value="+1" selected="selected">lagging</option>
+        </select>
+    </div><br>
+    <button id="button" onclick="calculate()">CALCULATE PARAMETERS</button>
+    </center>
+    </div>
+	</center>
+ 	<div id="output-container" style="display: none;">
+ 		<center>
+ 		<div id="output-box">
+ 		<center>
+    	<h2>OUTPUT VALUES</h2>
+    	</center>
+		<center>
+		<table style="width:60%">
+			<tr>
+			<th style="width: 10%">S.No</th>
+			<th style="width: 30%">PARAMETER</th>
+			<th style="width: 60%">OUTPUT</th>
+			</tr>
+			<tr>
+				<td>1.</td>
+				<td>INDUCTANCE PER PHASE PER KILOMETER:</td>
+				<td><div id="out1"></div></td>
+			</tr>
+			<tr>
+				<td>2.</td>
+				<td>CAPACITANCE PER PHASE PER KILOMETER:</td>
+				<td><div id="out2"></div></td>
+			</tr>
+			<tr>
+				<td>3.</td>
+				<td>INDUCTIVE REACTANCE PER PHASE:</td>
+				<td><div id="out3"></div></td>
+			</tr>
+			<tr>
+				<td>4.</td>
+				<td>CAPACITIVE REACTANCE PER PHASE:</td>
+				<td><div id="out4"></div></td>
+			</tr>
+			<tr>
+				<td>5.</td>
+				<td>RESISTANCE PER PHASE:</td>
+				<td><div id="out5"></div></td>
+			</tr>
+			<tr>
+				<td>6.</td>
+				<td>CHARGING CURRENT DRAWN FROM THE SENDING END SUB-STATION:</td>
+				<td>
+					<div id="out6">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>7.</td>
+				<td>ABCD PARAMETERS:</td>
+				<td>
+					<div id="out7"></div>
+				</td>
+			</tr>
+
+				<td>8.</td>
+				<td>SENDING END VOLTAGE IN KV:</td>
+				<td><div id="out8"></div></td>
+			</tr>
+			<tr>
+				<td>9.</td>
+				<td>SENDING END CURRENT IN A:</td>
+				<td><div id="out9"></div></td>
+			</tr>
+			<tr>
+				<td>10.</td>
+				<td>% of VOLTAGE REGULATION:</td>
+				<td><div id="out10"></div></td>
+			</tr>
+			<tr>
+				<td>11.</td>
+				<td>POWER LOSS IN THE LINE IN MW:</td>
+				<td><div id="out11"></div></td>
+			</tr>
+			<tr>
+				<td>12.</td>
+				<td>TRANSMISSION EFFICIENCY:</td>
+				<td><div id="out12"></div></td>
+			</tr>
+			<tr>
+				<td>13.</td>
+				<td>SENDING END CIRCLE DIAGRAM:</td>
+				<td><div id="out13" style="width: 400px; height: 400px;"></div></td>
+			</tr>
+			<tr>
+				<td>14.</td>
+				<td>RECEIVING END CIRCLE DIAGRAM:</td>
+				<td><div id="out14" style="width: 400px; height: 400px;"></div></td>
+			</tr>
+			<tr>
+				<td>15.</td>
+				<td>COMPENSATION REQUIREMENT AT THE RECIEVING END TO MAINTAIN THE VOLTAGE AT NOMINAL VALUE MVAR:</td>
+				<td><div id="out15"></div></td>
+			</tr>
+			<tr>
+				<td>16.</td>
+				<td>AMOUNT OF COMPENSATION REQUIRED IN MVAR:</td>
+				<td><div id="out16"></div></td>
+			</tr>
+		</table>
+		</center>
+		</div>
+		<button onclick="window.print()">PRINT THIS PAGE</button>
+		</center>
+	</div>
+	<footer><div id="credits-back"><div id="credits" style="  float: right;">DONE BY:<br> RAVI TEJA REDDY POGU
+				</div>
+			<br>
+			<br>
+			<div id="show-date"></div>
+			</div>
+	</footer>
+	</div>
+		<script type="text/javascript">document.getElementById('show-date').innerHTML=Date();</script>
+	    <div class="animation-area">
+		<ul class="box-area">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+	</div>
+	<!-- <script type="text/javascript">
+		function valid(value) {
+			if (value===""){
+				document.getElementById('no-sub').style.display="inline";
+			}else{
+				document.getElementById('no-sub').style.display="none";
+			}
+		}
+		function validA(value) {
+			if (value==="0"){
+				document.getElementById('no-a').style.display="inline";
+			}else{
+				document.getElementById('no-a').style.display="none";
+			}
+		}
+		function symValid(value) {
+			if (value==="unsym"){
+				document.getElementById('spacing-sub').style.display="block";
+			}else{
+				document.getElementById('spacing-sub').style.display="none";
+			}
+		}
+	</script> -->
+	<script src="script.js"></script>
+</body>
+</html>
